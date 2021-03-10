@@ -9,8 +9,7 @@ module Api
         user = User.create(user_params)
 
         if user.valid?
-          token = encode_token(user_id: user.id)
-          render json: { email: user.email, token: token }, status: :created
+          render json: user, status: :created
         else
           head(:unauthorized)
           render json: { error: 'Invalid username or password' }
@@ -22,8 +21,7 @@ module Api
         user = User.find_by(email: user_params[:email])
 
         if user&.authenticate(user_params[:password])
-          token = encode_token(user_id: user.id)
-          render json: { email: user.email, token: token }
+          render json: user
         else
           render json: { error: 'Invalid username or password' }
         end
