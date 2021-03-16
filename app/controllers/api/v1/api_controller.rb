@@ -3,15 +3,11 @@ module Api
     class ApiController < ApplicationController
       include JwtAuthenticatable
 
-      def success_response(object)
-        render json: object
+      def success_response(object, status = 200)
+        render json: object, status: status
       end
 
-      def created_response(object)
-        render json: object, status: :created
-      end
-
-      def error_response(payload, status)
+      def error_response(payload, status = 400)
         render json: { data: nil, errors: payload }, status: status
       end
     end
