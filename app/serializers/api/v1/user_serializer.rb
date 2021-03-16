@@ -4,7 +4,7 @@ module Api
       attributes :id, :email, :token
 
       def token
-        encode_token(user_id: object.id)
+        encode_token(user_id: object.id, admin: object.admin)
       end
     end
   end
