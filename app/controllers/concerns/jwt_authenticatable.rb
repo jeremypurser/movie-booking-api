@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 module JwtAuthenticatable
+  extend ActiveSupport::Concern
+
   # Returns secret
   #
   # @return {String}
@@ -74,7 +76,7 @@ module JwtAuthenticatable
   # Sends error response if token is invalid
   #
   # @return {Hash | nil}
-  def authorized
+  def authorize
     error_response('Must log in', :unauthorized) unless logged_in_user
   end
 end
