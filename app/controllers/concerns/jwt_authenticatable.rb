@@ -3,6 +3,15 @@
 module JwtAuthenticatable
   extend ActiveSupport::Concern
 
+  # Returns JWT
+  #
+  # @return {String}
+  def encode_token(payload)
+    JWT.encode(payload, secret)
+  end
+
+  private
+
   # Returns secret
   #
   # @return {String}
@@ -24,13 +33,6 @@ module JwtAuthenticatable
     request.headers['Authorization']
   end
 
-  # Returns JWT
-  #
-  # @return {String}
-  def encode_token(payload)
-    JWT.encode(payload, secret)
-  end
-
   # Return JWT or empty string
   #
   # @return {String}
@@ -48,7 +50,7 @@ module JwtAuthenticatable
 
   # Returns decoded JWT or nil
   #
-  # @return {Hash | nil}
+  # @return {Hash|nil}
   def decode_token
     return unless token_from_header
 
@@ -65,7 +67,7 @@ module JwtAuthenticatable
 
   # Returns the logged in user or nil
   #
-  # @return {User | nil}
+  # @return {User|nil}
   def logged_in_user
     return unless decode_token
 
@@ -75,8 +77,15 @@ module JwtAuthenticatable
 
   # Sends error response if token is invalid
   #
-  # @return {Hash | nil}
+  # @return {Hash|nil}
   def authorize
     error_response('Must log in', :unauthorized) unless logged_in_user
+  end
+
+  # Sends error response if requester does not have admin status
+  #
+  # @return {Hash|nil}
+  def admin_access
+    error_response('Not authorized', :unauthorized) unless logged_in_user&.admin?
   end
 end
