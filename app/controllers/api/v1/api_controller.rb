@@ -3,8 +3,6 @@ module Api
     class ApiController < ApplicationController
       include JwtAuthenticatable
 
-      before_action :authorized
-
       def success_response(object)
         render json: object
       end
