@@ -1,3 +1,3 @@
 class ApplicationSerializer < ActiveModel::Serializer
-  include Authorization
+  include JwtAuthenticatable
 end
