@@ -9,10 +9,10 @@ module Api
         user = User.create(user_params)
 
         if user.valid?
-          render json: user, status: :created
+          created_response(user)
         else
           head(:unauthorized)
-          render json: { error: 'Invalid username or password' }
+          error_response('Invalid username or password')
         end
       end
 
@@ -21,9 +21,9 @@ module Api
         user = User.find_by(email: user_params[:email])
 
         if user&.authenticate(user_params[:password])
-          render json: user
+          success_response(user)
         else
-          render json: { error: 'Invalid username or password' }
+          error_response('Invalid username or password')
         end
       end
 
