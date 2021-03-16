@@ -1,7 +1,7 @@
 module Api
   module V1
     class UsersController < ApiController
-      before_action :authorized, only: [:test]
+      before_action :authorize, only: [:test]
 
       # Register
       # POST /api/v1/register
@@ -11,8 +11,7 @@ module Api
         if user.valid?
           created_response(user)
         else
-          head(:unauthorized)
-          error_response('Invalid username or password')
+          error_response('Invalid username or password', :unauthorized)
         end
       end
 
@@ -23,7 +22,7 @@ module Api
         if user&.authenticate(user_params[:password])
           success_response(user)
         else
-          error_response('Invalid username or password')
+          error_response('Invalid username or password', :unauthorized)
         end
       end
 
