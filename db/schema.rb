@@ -13,10 +13,10 @@
 ActiveRecord::Schema.define(version: 2021_03_16_154613) do
 
   create_table "movies", force: :cascade do |t|
-    t.string "name"
-    t.integer "runtime"
-    t.integer "buffer"
-    t.text "details"
+    t.string "name", null: false
+    t.integer "runtime", null: false
+    t.integer "buffer", null: false
+    t.text "details", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
