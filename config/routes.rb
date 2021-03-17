@@ -4,6 +4,12 @@ Rails.application.routes.draw do
       post '/register', to: 'users#create'
       post '/login', to: 'users#login'
       get '/test', to: 'users#test'
+
+      scope 'movies' do
+        get '', to: 'movies#index'
+        post '', to: 'movies#create'
+        put ':id', to: 'movies#update'
+      end
     end
   end
 end
