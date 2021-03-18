@@ -5,7 +5,7 @@ module Api::V1
     before_action :admin_access
 
     def index
-      movies = Movie.page(params[:page])
+      movies = Movie.filter(filtering_params).page(params[:page])
 
       render json: movies, root: 'movies', meta: { pagination: pagination(movies) }
     end
@@ -42,6 +42,10 @@ module Api::V1
 
     def update_params
       params.permit(:details)
+    end
+
+    def filtering_params
+      params.slice(:name, :runtime, :buffer, :details)
     end
   end
 end
