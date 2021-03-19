@@ -1,7 +1,7 @@
 class Movie < ApplicationRecord
   extend Filterable
 
-  has_many :movies
+  has_many :show_times
 
   validates :name, presence: true, uniqueness: { case_sensitive: false }
   validates :runtime, presence: true
