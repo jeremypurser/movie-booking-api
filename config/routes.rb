@@ -10,6 +10,10 @@ Rails.application.routes.draw do
         post '', to: 'movies#create'
         put ':id', to: 'movies#update'
       end
+
+      scope 'showtimes' do
+        post '', to: 'show_times#create'
+      end
     end
   end
 end
