@@ -25,7 +25,7 @@ class ShowTimeValidator < ActiveModel::Validator
     return false if show_times.empty?
 
     show_times.all? do |st|
-      record.start_time > st.start_time && record.start_time < st.end_time
+      record.start_time >= st.start_time && record.start_time <= st.end_time
     end
   end
 
@@ -35,7 +35,7 @@ class ShowTimeValidator < ActiveModel::Validator
     return false if show_times.empty?
 
     show_times.all? do |st|
-      record.end_time > st.start_time && record.end_time < st.end_time
+      record.end_time >= st.start_time && record.end_time <= st.end_time
     end
   end
 
