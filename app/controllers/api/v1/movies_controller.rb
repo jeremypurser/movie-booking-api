@@ -2,12 +2,12 @@
 
 module Api::V1
   class MoviesController < ApiController
-    before_action :admin_access
+    before_action :admin_access, only: %i[create update]
 
     def index
       movies = Movie.filter(filtering_params).page(params[:page])
 
-      render json: movies, root: 'movies', meta: { pagination: pagination(movies) }
+      render json: movies, meta: { pagination: pagination(movies) }
     end
 
     # POST /api/v1/movies
