@@ -12,6 +12,7 @@ Rails.application.routes.draw do
       end
 
       scope 'showtimes' do
+        get '', to: 'show_times#index'
         post '', to: 'show_times#create'
       end
     end
