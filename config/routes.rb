@@ -15,6 +15,10 @@ Rails.application.routes.draw do
         get '', to: 'show_times#index'
         post '', to: 'show_times#create'
       end
+
+      scope 'tickets' do
+        post '', to: 'tickets#create'
+      end
     end
   end
 end
