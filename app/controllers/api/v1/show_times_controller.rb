@@ -8,7 +8,7 @@ module Api::V1
     def index
       show_times = ShowTime.filter(filtering_params).page(params[:page])
 
-      render json: show_times, meta: { pagination: pagination(show_times) }
+      success_response(data: show_times, meta: { pagination: pagination(show_times) })
     end
 
     # POST /api/v1/showtimes

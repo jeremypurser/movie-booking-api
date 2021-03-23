@@ -2,8 +2,8 @@ module Api::V1
   class ApiController < ApplicationController
     include JwtAuthenticatable
 
-    def success_response(object, status = 200)
-      render json: object, status: status
+    def success_response(data:, status: 200, meta: {})
+      render json: data, status: status, meta: meta
     end
 
     def error_response(payload, status = 400)

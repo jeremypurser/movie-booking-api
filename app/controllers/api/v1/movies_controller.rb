@@ -7,7 +7,7 @@ module Api::V1
     def index
       movies = Movie.filter(filtering_params).page(params[:page])
 
-      render json: movies, meta: { pagination: pagination(movies) }
+      success_response(data: movies, meta: { pagination: pagination(movies) })
     end
 
     # POST /api/v1/movies
@@ -15,7 +15,7 @@ module Api::V1
       movie = Movie.new(create_params)
 
       if movie.save
-        success_response(movie, 201)
+        success_response(data: movie, status: 201)
       else
         error_response(movie.errors.messages)
       end

@@ -2,15 +2,13 @@
 
 module Api::V1
   class UsersController < ApiController
-    before_action :authorize, only: [:test]
-
     # Register
     # POST /api/v1/register
     def create
       user = User.create(user_params)
 
       if user.valid?
-        success_response(user, 201)
+        success_response(data: user, status: 201)
       else
         error_response('Invalid username or password', :unauthorized)
       end
@@ -21,14 +19,10 @@ module Api::V1
       user = User.find_by(email: user_params[:email])
 
       if user&.authenticate(user_params[:password])
-        success_response(user)
+        success_response(data: user)
       else
         error_response('Invalid username or password', :unauthorized)
       end
-    end
-
-    def test
-      render json: { message: 'Success' }
     end
 
     private
