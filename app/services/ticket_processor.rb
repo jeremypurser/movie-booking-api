@@ -2,28 +2,30 @@
 
 class TicketProcessor
   def self.call(params)
-    new.create(params)
+    new(params).create
   end
 
-  def create(params)
-    tickets = params[:tickets]
+  def initialize(params)
+    @tickets = params[:tickets]
+    @create_params = params.reject { |k| k == 'tickets' }
+  end
 
-    create_params = params.reject { |k| k == :tickets }
-
-    if tickets > 10
-      Ticket.new.errors.add('cannot book more than 10 tickets at a time')
-    elsif tickets > 1
-      Ticket.new(many_payloads(tickets))
+  def create
+    if @tickets > 1
+      many_payloads
     else
-      Ticket.new(create_params)
+      Ticket.create(@create_params)
     end
   end
 
-  def many_payloads(tickets)
+  private
+
+  def many_payloads
     new_params = []
-    tickets.times do
-      new_params.push(create_params)
+    @tickets.times do
+      new_params.push(@create_params)
     end
-    new_params
+
+    Ticket.create(new_params)
   end
 end
