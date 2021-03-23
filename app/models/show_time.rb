@@ -12,4 +12,12 @@ class ShowTime < ApplicationRecord
   scope :filter_by_movie_id, ->(movie_id) { where movie_id: movie_id }
 
   paginates_per 10
+
+  def tickets_sold
+    Ticket.where(show_time_id: id).count
+  end
+
+  def tickets_available?
+    tickets_sold < seat_count
+  end
 end
